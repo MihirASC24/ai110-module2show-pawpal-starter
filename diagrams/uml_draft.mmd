@@ -1,0 +1,42 @@
+classDiagram
+    class Owner {
+        +str name
+        +str walk_time
+        +int max_tasks
+        +list~DailyPlan~ calendar
+        +list~Pet~ pets
+        +add_plan(plan: DailyPlan) void
+        +remove_plan(plan: DailyPlan) void
+        +add_pet(pet: Pet) void
+        +remove_pet(pet: Pet) void
+    }
+
+    class Pet {
+        +str name
+        +str species
+        +list~Task~ tasks
+        +add_task(task: Task) void
+        +remove_task(task: Task) void
+    }
+
+    class DailyPlan {
+        +int month
+        +int day
+        +dict~Task, int~ events
+        +add_event(task: Task, hour: int) bool
+        +remove_event(task: Task) void
+        +schedule(tasks: list~Task~) dict~Task, int~
+    }
+
+    class Task {
+        +str name
+        +list~Pet~ applicable_pets
+        +int time_needed_hours
+        +int priority
+    }
+
+    Owner "1" o-- "*" Pet : owns
+    Owner "1" *-- "*" DailyPlan : maintains calendar
+    Pet "1" o-- "*" Task : has
+    DailyPlan "*" --> "*" Task : schedules
+    Task "*" --> "*" Pet : applies to
