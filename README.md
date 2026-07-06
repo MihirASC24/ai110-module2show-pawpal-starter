@@ -80,14 +80,16 @@ Sample test output:
 
 ## 📐 Smarter Scheduling
 
-> Fill in once you've implemented scheduling logic.
-
 | Feature | Method(s) | Notes |
 |---------|-----------|-------|
-| Task sorting | | e.g., by priority, duration |
-| Filtering | | e.g., skip tasks if time runs out |
-| Conflict handling | | e.g., overlapping time slots |
-| Recurring tasks | | e.g., daily vs. weekly |
+
+| Task sorting | `DailyPlan.sort_by_time()` | Sorts the day's events chronologically by their `"HH:MM"` key (zero-padded strings sort correctly as text); a multi-hour task is listed once, at its earliest slot. |
+
+| Filtering | `DailyPlan.filter_tasks()` | Overloaded via `functools.singledispatchmethod`: pass a `bool` to filter by completion status, or a `str` to filter by pet name. Results reuse `sort_by_time()`, so they stay time-ordered and de-duplicated. |
+
+| Conflict handling | `DailyPlan.check_conflict()` | Detects overlapping time slots across a task's full span and returns a warning naming the clashing task(s) and every pet involved — whether the tasks share a pet or belong to different pets. |
+
+| Recurring tasks | `Task.mark_complete()` → `Task._spawn_next()`; auto-placed by `DailyPlan.complete_task()` → `DailyPlan.auto_place()` | Completing a `"daily"` or `"weekly"` task spawns a fresh incomplete copy and places it on the next occurrence's plan (+1 or +7 days, created via `Owner.plan_for()`); a `"once"` task spawns nothing. |
 
 ## 📸 Demo Walkthrough
 

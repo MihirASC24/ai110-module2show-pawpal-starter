@@ -52,6 +52,7 @@ Scheduled events were originally stored in a dict, with the key being the Task a
 - Describe one tradeoff your scheduler makes.
 - Why is that tradeoff reasonable for this scenario?
 
+The spawn_next() method was switched from hardcoding each field to using the replace() method that comes with Task being a dataclass. This approach is much more efficient, as it copies every field automatically. The tradeoff is that is_complete() must be maually reset to False each time.
 ---
 
 ## 3. AI Collaboration
