@@ -42,17 +42,17 @@ pip install -r requirements.txt
 6. Connect your logic to the Streamlit UI in `app.py`.
 7. Refine UML so it matches what you actually built.
 
-## Sample Output (Terminal)
+
+
+## 🖥️ Sample Output
+
+Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
+
 Schedule for Sam on 7/5
   00:00  Feed cat
   01:00  Groom both
   02:00  Groom both
   06:00  Morning walk
-```
-
-## 🖥️ Sample Output
-
-Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
 
 ```
 # e.g.:
@@ -131,10 +131,27 @@ Confidence Level: 4/5
 
 Describe your app in numbered steps so a reader can follow along without watching a video:
 
-1. <!-- Describe this step -->
-2. <!-- Describe this step -->
-3. <!-- Describe this step -->
-4. <!-- Describe this step -->
-5. <!-- Add more steps as needed -->
+1. Edit Owner Name, Pet name and species, preferred walk time, and max tasks per dat
+2. Edit Task info (title, duration, priority) and click "Add task" button
+3. Select start hour, and click "Schedule at time"
+4. If start hours overlap, warning returned
+5. Click "Generate schedule" to get list of tasks in order
+
+main.py output:
+Schedule for Sam on 7/5 (sorted by time)
+  08:00  Morning walk
+  12:00  Feed cat
+  15:00  Groom both
+
+Still to do on 7/5:
+
+Rex's tasks on 7/5:
+  - Morning walk
+  - Groom both
+
+Upcoming (auto-placed from completed recurring tasks):
+  7/6  08:00  Morning walk  (daily)
+  7/12  15:00  Groom both  (weekly)
+```
 
 **Screenshot or video** *(optional)*: <!-- Insert a screenshot or link to a demo video here -->

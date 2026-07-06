@@ -1,0 +1,58 @@
+classDiagram
+    class Owner {
+        +str name
+        +str walk_time
+        +int max_tasks
+        +list~DailyPlan~ calendar
+        +list~Pet~ pets
+        +add_plan(plan: DailyPlan) void
+        +remove_plan(plan: DailyPlan) void
+        +plan_for(month: int, day: int) DailyPlan
+        +add_pet(pet: Pet) void
+        +remove_pet(pet: Pet) void
+    }
+
+    class Pet {
+        +str name
+        +str species
+        +list~Task~ tasks
+        +int task_count
+        +add_task(task: Task) void
+        +remove_task(task: Task) void
+    }
+
+    class DailyPlan {
+        +int HOURS_IN_DAY$
+        +dict~str, range~ WALK_WINDOWS$
+        +int month
+        +int day
+        +Owner owner
+        +dict~str, Task~ events
+        +add_event(task: Task, time: str) bool
+        +remove_event(task: Task) void
+        +check_conflict(task: Task, time: str) str
+        +sort_by_time() list~tuple~
+        +schedule(tasks: list~Task~) dict~str, Task~
+        +complete_task(task: Task) Task
+        +auto_place(task: Task, at_time: str) DailyPlan
+        +filter_tasks(key: bool|str) list~Task~
+        +candidate_hours(task: Task) list~str~
+    }
+
+    class Task {
+        +str name
+        +list~Pet~ applicable_pets
+        +int time_needed_hours
+        +int priority
+        +bool is_complete
+        +str freq
+        +duration() int
+        +mark_complete() Task
+    }
+
+    Owner "1" o-- "*" Pet : owns
+    Owner "1" *-- "*" DailyPlan : maintains calendar
+    DailyPlan "*" --> "1" Owner : belongs to
+    Pet "1" o-- "*" Task : has
+    DailyPlan "*" --> "*" Task : schedules
+    Task "*" --> "*" Pet : applies to

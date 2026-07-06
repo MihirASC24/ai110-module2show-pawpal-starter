@@ -269,12 +269,20 @@ class DailyPlan:
         ]
 
     def schedule(self, tasks: list[Task]) -> dict[str, Task]:
-        """Place tasks highest-priority first within the owner's limits, returning 'HH:MM' -> Task."""
+        """Place tasks highest-priority first within the owner's limits, returning 'HH:MM' -> Task.
+
+        Any task already on the plan (e.g. placed manually at a chosen time) is
+        left exactly where it is and counts toward the limit, so auto-scheduling
+        fills the remaining slots around fixed placements rather than moving them.
+        """
         max_tasks = self.owner.max_tasks if self.owner is not None else len(tasks)
+        placed_ids = {id(task) for task in self.events.values()}
         ordered = sorted(tasks, key=lambda t: t.priority, reverse=True)
 
-        scheduled = 0
+        scheduled = len(placed_ids)
         for task in ordered:
+            if id(task) in placed_ids:
+                continue  # keep an already-placed task at its existing time
             if scheduled >= max_tasks:
                 break
             if self._place(task):
@@ -283,12 +291,12 @@ class DailyPlan:
 
     def _place(self, task: Task) -> bool:
         """Try each candidate start time until the task fits."""
-        for time in self._candidate_hours(task):
+        for time in self.candidate_hours(task):
             if self.add_event(task, time):
                 return True
         return False
 
-    def _candidate_hours(self, task: Task) -> list[str]:
+    def candidate_hours(self, task: Task) -> list[str]:
         """Return start times ('HH:MM') to try, walk tasks preferring the owner's walk_time window."""
         day_hours = range(self.HOURS_IN_DAY)
         if self.owner is not None and "walk" in task.name.lower():

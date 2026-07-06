@@ -61,12 +61,13 @@ The spawn_next() method was switched from hardcoding each field to using the rep
 
 - How did you use AI tools during this project (for example: design brainstorming, debugging, refactoring)?
 - What kinds of prompts or questions were most helpful?
+AI was used for the brainstorming of the classes, and asking for potential ideas was very helpful.
 
 **b. Judgment and verification**
 
 - Describe one moment where you did not accept an AI suggestion as-is.
 - How did you evaluate or verify what the AI suggested?
-
+The AI originally suggested only using hours as the times for tasks, but I decided that would not provide enough utility and chose to use hours and minutes.
 ---
 
 ## 4. Testing and Verification
@@ -75,12 +76,12 @@ The spawn_next() method was switched from hardcoding each field to using the rep
 
 - What behaviors did you test?
 - Why were these tests important?
-
+I tested adding tasks normally, adding tasks at the same time (collision), and recurring tasks.
 **b. Confidence**
 
 - How confident are you that your scheduler works correctly?
 - What edge cases would you test next if you had more time?
-
+I would test along multiple months and years, in order to ensure the scheduler would not run into any long-term issues.
 ---
 
 ## 5. Reflection
@@ -89,10 +90,14 @@ The spawn_next() method was switched from hardcoding each field to using the rep
 
 - What part of this project are you most satisfied with?
 
+I am satisfied with how much I was able to produce, in terms of code and a workable product.
+
 **b. What you would improve**
 
 - If you had another iteration, what would you improve or redesign?
+I would polish the UI a bit more and format it in a more appealing and efficient way.
 
 **c. Key takeaway**
 
 - What is one important thing you learned about designing systems or working with AI on this project?
+With the right methods and steps, AI can be a game-changer for creating projects.
