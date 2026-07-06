@@ -1,17 +1,43 @@
 # PawPal+ Project Reflection
 
 ## 1. System Design
-
+-Add pet with relevant info about pet
+-Tell owner what tasks need to be done for pet
+-Schedule activities for pet with constraints
 **a. Initial design**
 
 - Briefly describe your initial UML design.
 - What classes did you include, and what responsibilities did you assign to each?
+
+Classes:
+-Owner
+    -Attributes: name, preferences, calendar (list of Daily_Plans), list of Pets
+    -Methods: 
+        -add_plan(Daily_Plan): adds a Daily_Plan to calendar
+        -remove_plan(): removes Daily_Plan
+-Pet
+    -Attributes: characteristics (Name, species, Task(list))
+    -Methods:
+        -addTask(Task): adds Task to list
+        -removeTask(Task): removes Task from list
+        -addPet(Pet)
+        -removePet(Pet)
+-Daily_plans
+    -Attributes: day (int month, int day), dict (Task : time)
+    -Methods: 
+        addEvent(Task, int hour, int minute): Adds task at time, in consideration of priority
+        removeEvent(Task): Removes task from daily plan
+-Task
+    -Attributes: Name, applicable Pets, time_needed(int hour, int minute), int priority
+
+---
 
 **b. Design changes**
 
 - Did your design change during implementation?
 - If yes, describe at least one change and why you made it.
 
+Scheduled events were originally stored in a dict, with the key being the Task and the value being the time (hour) it was scheduled for. I re-keyed with hour so checking times would be easier. This gives a collision-check time of O(1). Additionally, multi-hour tasks can be represented.
 ---
 
 ## 2. Scheduling Logic and Tradeoffs

@@ -42,6 +42,14 @@ pip install -r requirements.txt
 6. Connect your logic to the Streamlit UI in `app.py`.
 7. Refine UML so it matches what you actually built.
 
+## Sample Output (Terminal)
+Schedule for Sam on 7/5
+  00:00  Feed cat
+  01:00  Groom both
+  02:00  Groom both
+  06:00  Morning walk
+```
+
 ## 🖥️ Sample Output
 
 Paste a sample of your app's CLI or Streamlit output here so a reader can see what a generated plan looks like:
