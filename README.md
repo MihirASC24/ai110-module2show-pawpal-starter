@@ -64,18 +64,54 @@ Paste a sample of your app's CLI or Streamlit output here so a reader can see wh
 
 ## 🧪 Testing PawPal+
 
+The suite in [`tests/test_pawpal.py`](tests/test_pawpal.py) covers the core scheduling behaviors (21 tests):
+
+- **Sorting** — events are returned in chronological order, and a multi-hour task is listed once at its earliest slot.
+- **Filtering** — `filter_tasks()` selects by completion status (`bool`) or pet name (`str`), and rejects unsupported types.
+- **Recurring tasks** — completing a `daily`/`weekly` task spawns a fresh incomplete copy and auto-places it on the next day / +7 days (including month rollover and the preferred-slot fallback); a `once` task spawns nothing.
+- **Conflict detection** — overlapping time slots (including partial multi-hour overlaps) are flagged with the clashing task(s) and every pet involved; free slots and self-overlap report no conflict.
+- **Basic model** — `mark_complete()` and `Pet.add_task()` update state correctly.
+
 ```bash
 # Run the full test suite:
-pytest
+python3 -m pytest
 
 # Run with coverage:
 pytest --cov
 ```
 
+
+
 Sample test output:
 
 ```
 # Paste your pytest output here
+
+Marks task complete. PASSED                            [  4%]
+Increments task count. PASSED                          [  9%]
+Orders events by time. PASSED                          [ 14%]
+Multi-hour task listed once. PASSED                    [ 19%]
+Filters by completion status. PASSED                   [ 23%]
+Filters by pet name. PASSED                            [ 28%]
+Rejects bad filter type. PASSED                        [ 33%]
+Once task does not recur. PASSED                       [ 38%]
+Daily task spawns copy. PASSED                         [ 42%]
+Daily placed next day. PASSED                          [ 47%]
+Weekly placed 7 days later. PASSED                     [ 52%]
+Handles month rollover. PASSED                         [ 57%]
+No owner still spawns copy. PASSED                     [ 61%]
+Falls back when slot taken. PASSED                     [ 66%]
+No conflict when free. PASSED                          [ 71%]
+Flags overlapping tasks. PASSED                        [ 76%]
+Detects partial overlap. PASSED                        [ 80%]
+Lists involved pets sorted. PASSED                     [ 85%]
+Reports no pets assigned. PASSED                       [ 90%]
+Ignores self-conflict. PASSED                          [ 95%]
+Sorts multi-hour by start. PASSED                      [100%]
+
+===================== 21 passed in 0.02s =====================
+
+Confidence Level: 4/5
 ```
 
 ## 📐 Smarter Scheduling
